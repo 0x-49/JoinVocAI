@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Logo from './Logo';
 import { Button } from './ui/button';
@@ -12,101 +13,115 @@ import {
 } from "@/components/ui/navigation-menu"
 import { cn } from '@/lib/utils';
 
+interface NavItem {
+  title: string;
+  href?: string;
+  subItems?: NavItem[];
+  description?: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    title: 'Products',
+    subItems: [
+      { title: 'VOC AI Platform', href: '/' },
+      { title: 'AI Chatbot', href: '/ai-chatbot' },
+      { title: 'Sentiment Analysis', href: '/sentiment-analysis' },
+      { title: 'Market Insights', href: '/market-insights' },
+    ],
+  },
+  {
+    title: 'Tools',
+    subItems: [
+      { title: 'AI Listing Generator', href: '/ai-listing' },
+      { title: 'FBA Calculator', href: '/fba-calculator' },
+      { title: 'Keyword Research', href: '/keyword-research' },
+      { title: 'Product Research', href: '/product-research' },
+    ],
+  },
+  { title: 'Pricing', href: '/pricing' },
+  { title: 'Blog', href: '/blog' },
+];
+
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   return (
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-blue-600"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-800 focus:text-white focus:rounded-lg focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Skip to main content
       </a>
-      <div className="w-full border-b bg-white" role="banner">
-      <div className="flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex items-center gap-8">
-            <Link href="/" className="cursor-pointer" aria-label="VOC AI Home">
-            <Logo />
-            </Link>
-            <NavigationMenu aria-label="Main Navigation">
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-neutral-700 hover:text-primary-600" aria-label="Products Menu">Products</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-6 w-[400px] md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]" role="menu">
-                  <li className="row-span-3" role="none">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href="/"
-                        >
-                          <Logo />
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            VOC AI Platform
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Comprehensive AI tools for Amazon sellers
-                          </p>
+
+      <header className="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 shadow-lg" role="banner">
+        <div className="flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8 xl:px-8 max-w-8xl mx-auto md:py-6 relative">
+          <button 
+            className="md:hidden p-2 text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <div className="flex items-center gap-10">
+            <div className="flex items-center gap-8">
+              <Link href="/" className="cursor-pointer" aria-label="VOC AI Home">
+                <Logo />
+              </Link>
+              
+              <NavigationMenu aria-label="Main Navigation">
+                <NavigationMenuList>
+                  {NAV_ITEMS.map((item) => (
+                    <NavigationMenuItem key={item.title}>
+                      {item.subItems ? (
+                        <>
+                          <NavigationMenuTrigger className="text-neutral-700 hover:text-primary-600">
+                            {item.title}
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <ul className="grid gap-3 p-6 w-[400px] md:w-[500px] lg:w-[600px] lg:grid-cols-[.75fr_1fr]">
+                              {item.subItems.map((subItem) => (
+                                <ListItem 
+                                  key={subItem.title}
+                                  href={subItem.href || '#'}
+                                  title={subItem.title}
+                                >
+                                  {subItem.description}
+                                </ListItem>
+                              ))}
+                            </ul>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <Link href={item.href || '#'} legacyBehavior passHref>
+                          <NavigationMenuLink className="text-neutral-700 hover:text-primary-600">
+                            {item.title}
+                          </NavigationMenuLink>
                         </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <ListItem href="/ai-chatbot" title="AI Chatbot">
-                      Intelligent chatbot for customer service automation
-                    </ListItem>
-                    <ListItem href="/sentiment-analysis" title="Sentiment Analysis">
-                      Analyze customer feedback and reviews
-                    </ListItem>
-                    <ListItem href="/market-insights" title="Market Insights">
-                      Data-driven market research and competitor analysis
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-neutral-700 hover:text-primary-600">Tools</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                    <ListItem href="/ai-listing" title="AI Listing Generator">
-                      Generate optimized product listings
-                    </ListItem>
-                    <ListItem href="/fba-calculator" title="FBA Calculator">
-                      Calculate Amazon FBA fees and profitability
-                    </ListItem>
-                    <ListItem href="/keyword-research" title="Keyword Research">
-                      Find high-performing keywords
-                    </ListItem>
-                    <ListItem href="/product-research" title="Product Research">
-                      Discover profitable product opportunities
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/pricing" legacyBehavior passHref>
-                  <NavigationMenuLink className="text-neutral-700 hover:text-primary-600">
-                    Pricing
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/blog" legacyBehavior passHref>
-                  <NavigationMenuLink className="text-neutral-700 hover:text-primary-600">
-                    Blog
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                      )}
+                    </NavigationMenuItem>
+                  ))}
+                </NavigationMenuList>
+              </NavigationMenu>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <Link href="/login" passHref>
+                <Button variant="ghost" aria-label="Login to your account">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/signup" passHref>
+                <Button aria-label="Get started with VOC AI">
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center gap-4">
-            <Link href="/login" passHref>
-            <Button variant="ghost" aria-label="Login to your account">Login</Button>
-            </Link>
-            <Link href="/signup" passHref>
-            <Button aria-label="Get started with VOC AI">Get Started</Button>
-          </Link>
-        </div>
-      </div>
-    </div>
+      </header>
     </>
   );
 };
@@ -127,19 +142,22 @@ const ListItem = forwardRef<
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-            href={href}
-            role="menuitem"
-            {...props}
+          href={href}
+          role="menuitem"
+          {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
+          {children && (
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+              {children}
+            </p>
+          )}
         </Link>
       </NavigationMenuLink>
     </li>
   );
 });
+
 ListItem.displayName = "ListItem";
 
 export default Header;

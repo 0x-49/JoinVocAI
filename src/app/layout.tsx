@@ -60,15 +60,51 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
         <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          {/* Primary Meta Tags */}
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <meta name="theme-color" content="#ffffff" />
+          <meta name="title" content="VOC AI - AI-Powered Market Intelligence Platform" />
+          <meta name="description" content="Unlock competitor insights and market trends with VOC AI's advanced AI analysis platform. Get actionable intelligence for strategic business decisions." />
+
+          {/* Open Graph / Facebook */}
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://vocai.com/" />
+          <meta property="og:title" content="VOC AI - AI-Powered Market Intelligence Platform" />
+          <meta property="og:description" content="Unlock competitor insights and market trends with VOC AI's advanced AI analysis platform. Get actionable intelligence for strategic business decisions." />
+          <meta property="og:image" content="/images/og-image.jpg" />
+
+          {/* Twitter */}
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:url" content="https://vocai.com/" />
+          <meta property="twitter:title" content="VOC AI - AI-Powered Market Intelligence Platform" />
+          <meta property="twitter:description" content="Unlock competitor insights and market trends with VOC AI's advanced AI analysis platform. Get actionable intelligence for strategic business decisions." />
+          <meta property="twitter:image" content="/images/twitter-image.jpg" />
+
+          {/* Favicons */}
           <link rel="icon" href="/favicon.ico" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="manifest" href="/manifest.json" />
+
+          {/* Structured Data */}
           <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "url": "https://vocai.com",
+              "logo": "https://vocai.com/images/Vox-AI-Logo.png.webp",
+              "contactPoint": [{
+                "@type": "ContactPoint",
+                "telephone": "+1-800-555-1234",
+                "contactType": "customer service",
+                "areaServed": "US"
+              }]
+            })}
+          </script>
         </head>
       <body
         className={cn(

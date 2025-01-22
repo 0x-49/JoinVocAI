@@ -32,10 +32,7 @@ export default function ReviewAnalysis() {
               Review Intelligence Platform
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Transform Reviews into{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                Actionable Insights
-              </span>
+              Optimize Your Business with AI-Powered Review Analysis Solutions
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Download and analyze customer reviews from multiple platforms. Get deep insights, track sentiment trends, and make data-driven decisions.

@@ -32,10 +32,7 @@ export default function AIChatbot() {
               AI-Powered Support
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Intelligent{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-                Customer Service
-              </span>
+              Enhance Your Customer Support with AI-Powered Chatbot Solutions
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Provide instant, accurate support 24/7 with our AI chatbot trained on your specific business data and customer interactions.

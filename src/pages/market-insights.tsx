@@ -65,10 +65,7 @@ export default function MarketInsights() {
           </HoverCard>
           
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            Data-Driven{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600">
-              Market Insights
-            </span>
+            Optimize Your Business with AI-Powered Market Intelligence Solutions
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Make informed business decisions with AI-powered market analysis and competitor research.
